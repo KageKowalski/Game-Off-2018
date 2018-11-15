@@ -6,7 +6,7 @@ import math
 
 #Balls which bounce around
 class Ball:
-    def __init__(self,_x=float(80),_y=float(60),_r=4,_v=(random.random(),random.random()),_c=random.randint(1,15)):
+    def __init__(self,_x=float(10),_y=float(10),_r=4,_v=(random.random(),random.random()),_c=random.randint(1,15)):
         self.x = _x
         self.y = _y
         self.r = _r
@@ -15,17 +15,23 @@ class Ball:
 
 #Paddle which reflects balls
 class Paddle:
-    def __init__(self,_x,_y,_hl=2,_c=random.randint(1,15)):
+    def __init__(self,_x,_y,_hl=3,_c=random.randint(1,15)):
         self.x = _x
         self.y = _y
         self.hl = _hl
         self.c = _c
+        self.ulc = (self.x-self.hl,self.y-self.hl)
+        self.urc = (self.x+self.hl,self.y-self.hl)
+        self.llc = (self.x-self.hl,self.y+self.hl)
+        self.lrc = (self.x+self.hl,self.y+self.hl)
 
 #Application
 class App:
     def __init__(self):
         pyxel.init(160,120,caption="Ball Game")
-        self.balls = [Ball()]
+        self.balls = [Ball(10,10,4,(random.random(),random.random())),Ball(10,10,4,(random.random(),random.random()))]
+        self.score = 0
+        self.paddle = Paddle(0,0)
         pyxel.run(self.update,self.draw)
     
     #Update everything
@@ -34,28 +40,22 @@ class App:
         if pyxel.btnp(pyxel.KEY_ESCAPE):
             pyxel.quit()
         
-        #Move paddle
-        self.paddle = Paddle(pyxel.mouse_x,pyxel.mouse_y)
-        
-        #Move balls
+        #Handle Collisions
         for ball in self.balls:
-            
-            self.ulc = (self.paddle.x-self.paddle.hl,self.paddle.y-self.paddle.hl)
-            self.urc = (self.paddle.x+self.paddle.hl,self.paddle.y-self.paddle.hl)
-            self.llc = (self.paddle.x-self.paddle.hl,self.paddle.y+self.paddle.hl)
-            self.lrc = (self.paddle.x+self.paddle.hl,self.paddle.y+self.paddle.hl)
-            
-            #Handle screen collisions
+            #Handle ball-window collisions
             if ball.x + ball.r >= 160 or ball.x - ball.r <= 0:
                 ball.v = (-ball.v[0],ball.v[1])
             elif ball.y + ball.r >= 120 or ball.y - ball.r <= 0:
                 ball.v = (ball.v[0],-ball.v[1])
-            #Handle paddle collisions
-            elif math.sqrt( ((ball.x-self.ulc[0])**2)+((ball.y-self.ulc[1])**2) ) <= ball.r or math.sqrt( ((ball.x-self.urc[0])**2)+((ball.y-self.urc[1])**2) ) <= ball.r or math.sqrt( ((ball.x-self.llc[0])**2)+((ball.y-self.llc[1])**2) ) <= ball.r or math.sqrt( ((ball.x-self.lrc[0])**2)+((ball.y-self.lrc[1])**2) ) <= ball.r:
+            #Handle ball-paddle collisions
+            elif math.sqrt( ((ball.x-self.paddle.ulc[0])**2)+((ball.y-self.paddle.ulc[1])**2) ) <= ball.r or math.sqrt( ((ball.x-self.paddle.urc[0])**2)+((ball.y-self.paddle.urc[1])**2) ) <= ball.r or math.sqrt( ((ball.x-self.paddle.llc[0])**2)+((ball.y-self.paddle.llc[1])**2) ) <= ball.r or math.sqrt( ((ball.x-self.paddle.lrc[0])**2)+((ball.y-self.paddle.lrc[1])**2) ) <= ball.r:
                 ball.v = (-ball.v[0],-ball.v[1])
-            #Handle standard movement
+                self.score = self.score + 1
+            
+            #Move paddle and balls
             ball.x = ball.x + ball.v[0]
             ball.y = ball.y + ball.v[1]
+        self.paddle = Paddle(pyxel.mouse_x,pyxel.mouse_y)
     
     #Draw everything
     def draw(self):
@@ -68,6 +68,9 @@ class App:
         #Draw balls
         for ball in self.balls:
             pyxel.circ(ball.x,ball.y,ball.r,ball.c)
+        
+        #Print score
+        pyxel.text(2,2,str(self.score),random.randint(1,15))
 
 App()
 
