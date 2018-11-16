@@ -28,11 +28,10 @@ class Paddle:
 #Application
 class App:
     def __init__(self):
-        pyxel.init(160,120,caption="Ball Game")
+        pyxel.init(160,120,caption="Orbs")
         self.balls = [Ball(10,10,4,(100,100)) ,Ball(10,10,4,(random.random(),random.random()))]
         self.score = 0
         self.paddle = Paddle(0,0)
-        pyxel.run(self.update,self.draw)
     
     #Update everything
     def update(self):
@@ -71,18 +70,3 @@ class App:
         
         #Print score
         pyxel.text(2,2,str(self.score),random.randint(1,15))
-
-App()
-
-
-
-
-
-
-
-
-
-
-
-
-
