@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
 
-import RetroHub
+#Start App
+import App
+App.App()
 
-RetroHub.App()

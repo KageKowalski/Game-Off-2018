@@ -1,43 +1,51 @@
 # -*- coding: utf-8 -*-
 
+
+#imports
 import pyxel
 import random
 import math
 
-#Balls which bounce around
-class Ball:
-    def __init__(self,_x=float(10),_y=float(10),_r=4,_v=(random.random(),random.random()),_c=random.randint(1,15)):
-        self.x = _x
-        self.y = _y
-        self.r = _r
-        self.v = _v
-        self.c = _c
 
-#Paddle which reflects balls
-class Paddle:
-    def __init__(self,_x,_y,_hl=3,_c=random.randint(1,15)):
-        self.x = _x
-        self.y = _y
-        self.hl = _hl
-        self.c = _c
-        self.ulc = (self.x-self.hl,self.y-self.hl)
-        self.urc = (self.x+self.hl,self.y-self.hl)
-        self.llc = (self.x-self.hl,self.y+self.hl)
-        self.lrc = (self.x+self.hl,self.y+self.hl)
-
-#Application
-class App:
-    def __init__(self):
-        pyxel.init(160,120,caption="Orbs")
-        self.balls = [Ball(10,10,4,(100,100)) ,Ball(10,10,4,(random.random(),random.random()))]
-        self.score = 0
-        self.paddle = Paddle(0,0)
+#Orbs game
+class Orbs:
+    #Ball entity
+    class Ball:
+        def __init__(self,_v=(random.random(),random.random()),_x=float(10),_y=float(10),_r=4,_c=random.randint(1,15)):
+            self.x = _x
+            self.y = _y
+            self.r = _r
+            self.v = _v
+            self.c = _c
     
-    #Update everything
+    
+    #Paddle entity (Player cursor)
+    class Paddle:
+        def __init__(self,_x,_y,_hl=3,_c=random.randint(1,15)):
+            self.x = _x
+            self.y = _y
+            self.hl = _hl
+            self.c = _c
+            self.ulc = (self.x-self.hl,self.y-self.hl)
+            self.urc = (self.x+self.hl,self.y-self.hl)
+            self.llc = (self.x-self.hl,self.y+self.hl)
+            self.lrc = (self.x+self.hl,self.y+self.hl)
+    
+    
+    #Initialize balls list (and first Ball)
+    #Initialize score
+    #Initialize Paddle
+    def __init__(self):
+        self.balls = [self.Ball((random.random(),random.random()))]
+        self.score = 0
+        self.paddle = self.Paddle(0,0)
+    
+    
+    #Update Orbs
     def update(self):
-        #Quit game if player presses escape key
-        if pyxel.btnp(pyxel.KEY_ESCAPE):
-            pyxel.quit()
+        #Return to Hub if Player presses 'B' key
+        if pyxel.btnp(pyxel.KEY_B):
+            return True
         
         #Handle Collisions
         for ball in self.balls:
@@ -54,19 +62,23 @@ class App:
             #Move paddle and balls
             ball.x = ball.x + ball.v[0]
             ball.y = ball.y + ball.v[1]
-        self.paddle = Paddle(pyxel.mouse_x,pyxel.mouse_y)
+        self.paddle = self.Paddle(pyxel.mouse_x,pyxel.mouse_y)
+        
+        return False
     
-    #Draw everything
+    
+    #Draw Orbs
     def draw(self):
         #Clear screen
         pyxel.cls(0)
         
-        #Draw paddle
+        #Draw Paddle
         pyxel.rect(self.paddle.x-self.paddle.hl,self.paddle.y-self.paddle.hl,self.paddle.x+self.paddle.hl,self.paddle.y+self.paddle.hl,self.paddle.c)
         
-        #Draw balls
+        #Draw Balls
         for ball in self.balls:
             pyxel.circ(ball.x,ball.y,ball.r,ball.c)
         
         #Print score
         pyxel.text(2,2,str(self.score),random.randint(1,15))
+
