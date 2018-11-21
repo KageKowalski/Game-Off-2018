@@ -42,25 +42,25 @@ class Hub:
                 if self.hub[x][y] == -1:
                     player_pos = (x,y)
         #Move Player up one space
-        if pyxel.btnp(pyxel.KEY_W):
+        if pyxel.btnp(pyxel.KEY_W,10,3):
             if player_pos[1] != 0 and self.hub[player_pos[0]][player_pos[1]-1] == 0:
                 self.hub[player_pos[0]][player_pos[1]]=0
                 self.hub[player_pos[0]][player_pos[1]-1]=-1
                 player_pos=(player_pos[0],player_pos[1]-1)
         #Move Player left one space
-        elif pyxel.btnp(pyxel.KEY_A):
+        elif pyxel.btnp(pyxel.KEY_A,10,3):
             if player_pos[0] != 0 and self.hub[player_pos[0]-1][player_pos[1]] == 0:
                 self.hub[player_pos[0]][player_pos[1]]=0
                 self.hub[player_pos[0]-1][player_pos[1]]=-1
                 player_pos=(player_pos[0]-1,player_pos[1])
         #Move Player down one space
-        elif pyxel.btnp(pyxel.KEY_S):
+        elif pyxel.btnp(pyxel.KEY_S,10,3):
             if player_pos[1] != int(pyxel.height/8)-1 and self.hub[player_pos[0]][player_pos[1]+1] == 0:
                 self.hub[player_pos[0]][player_pos[1]]=0
                 self.hub[player_pos[0]][player_pos[1]+1]=-1
                 player_pos=(player_pos[0],player_pos[1]+1)
         #Move player right one space
-        elif pyxel.btnp(pyxel.KEY_D):
+        elif pyxel.btnp(pyxel.KEY_D,10,3):
             if player_pos[0] != int(pyxel.width/8)-1 and self.hub[player_pos[0]+1][player_pos[1]] == 0:
                 self.hub[player_pos[0]][player_pos[1]]=0
                 self.hub[player_pos[0]+1][player_pos[1]]=-1
