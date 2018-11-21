@@ -29,8 +29,8 @@ class Hub:
         
         #Initialize Characters and place Player in hub
         self.hub[0][4] = -1
-        self.hub[1][1] = utility.Location.ORBS
-        self.hub[22][14] = utility.Location.ORBS
+        self.hub[1][1] = utility.Location.TEMPLATE
+        self.hub[4][1] = utility.Location.ORBS
     
     
     #Update Hub
@@ -102,24 +102,10 @@ class Hub:
                     #Draw Player
                     if self.hub[x][y] == -1:
                         pyxel.blt(x*8, y*8, 0, 0, 8, 8, 8, 0)
+                    #Draw Template Icon
+                    elif self.hub[x][y] == utility.Location.TEMPLATE:
+                        pyxel.blt(x*8, y*8, 0, 0, 16, 8, 8, 0)
                     #Draw Orbs Icon
                     elif self.hub[x][y] == utility.Location.ORBS:
-                        pyxel.blt(x*8, y*8, 0, 0, 16, 8, 8, 0)
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+                        pyxel.blt(x*8, y*8, 0, 0, 24, 8, 8, 0)
 

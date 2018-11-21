@@ -34,25 +34,27 @@ class App:
         #Update Hub
         if self.location==utility.Location.HUB:
             self.location=self.hub.update()
+        #Update Template
+        elif self.location==utility.Location.TEMPLATE:
+            if self.template.update():
+                self.location=utility.Location.HUB
+                self.template=Template.Template()
         #Update Orbs
         elif self.location==utility.Location.ORBS:
             if self.orbs.update():
                 self.location=utility.Location.HUB
                 self.orbs=Orbs.Orbs()
-        #Update Template
-        elif self.location==utility.Location.TEMPLATE:
-            if self.template.update():
-                self.location==utility.Location.TEMPLATE
-                self.template=Template.template()
-        
+    
+    
     #Draw App based on Player Location
     def draw(self):
         #Draw Hub
         if self.location==utility.Location.HUB:
             self.hub.draw()
+        #Draw Template
+        elif self.location==utility.Location.TEMPLATE:
+            self.template.draw()
         #Draw Orbs
         elif self.location==utility.Location.ORBS:
             self.orbs.draw()
-        elif self.location==utility.Location.TEMPLATE:
-            self.template.draw()
 

@@ -36,7 +36,7 @@ class Orbs:
     #Initialize score
     #Initialize Paddle
     def __init__(self):
-        self.balls = [self.Ball((random.random(),random.random()))]
+        self.balls = [self.Ball((random.random()+0.5,random.random()+0.5))]
         self.score = 0
         self.paddle = self.Paddle(0,0)
     
