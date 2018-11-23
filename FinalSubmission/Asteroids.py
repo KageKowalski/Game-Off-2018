@@ -39,29 +39,20 @@ class Asteroids:
 
     class Player:
         def __init__(self):
-            self.x1 = 0
-            self.x2 = 0
-            self.y1 = 0
-            self.y2 = 0
-            self.update_position()
+            self.xloc = pyxel.width // 2
+            self.yloc = pyxel.height // 2
+            self.yvel = 0.4
+            self.xvel = 0.4
 
-        def update_position(self):
-            self.x1 = pyxel.mouse_x - 1
-            self.x2 = self.x1 + 1
-            self.y1 = pyxel.mouse_y - 1
-            self.y2 = self.y1 + 1
 
     def __init__(self):
         self.parts_of_seconds = 0
         self.seconds = 0
         self.minutes = 0
-        self.scrnwidth = pyxel.width
-        self.scrnheight = pyxel.height
+        self.elapsed_seconds = 0
         self.asteroids = []
         self.player = self.Player()
         self.spawn_rate = 1
-        self.upperlimit = 45
-        self.elapsed_seconds = 0
 
     #Update the game
     def update(self):
@@ -69,20 +60,39 @@ class Asteroids:
         if pyxel.btnp(pyxel.KEY_B):
             return True
 
-        self.player.update_position()
-
         for asteroid in self.asteroids:
             asteroid.x += asteroid.xvel
             asteroid.y += asteroid.yvel
-            if asteroid.x > self.scrnwidth + 4 or asteroid.x < -4:
+            if asteroid.x > pyxel.width + 4 or asteroid.x < -4:
                 self.asteroids.remove(asteroid)
-            if asteroid.y > self.scrnwidth + 4 or asteroid.y < -4:
+                continue
+            if asteroid.y > pyxel.height + 4 or asteroid.y < -4:
                 self.asteroids.remove(asteroid)
 
-        if pyxel.frame_count % 60 == 0:
+        # MOVEMENT
+        if pyxel.btn(pyxel.KEY_W) and pyxel.btn(pyxel.KEY_D):
+            self.player.yloc -= self.player.yvel
+            self.player.xloc += self.player.xvel
+        elif pyxel.btn(pyxel.KEY_W) and pyxel.btn(pyxel.KEY_A):
+            self.player.yloc -= self.player.yvel
+            self.player.xloc -= self.player.xvel
+        elif pyxel.btn(pyxel.KEY_S) and pyxel.btn(pyxel.KEY_A):
+            self.player.yloc += self.player.yvel
+            self.player.xloc -= self.player.xvel
+        elif pyxel.btn(pyxel.KEY_S) and pyxel.btn(pyxel.KEY_D):
+            self.player.yloc += self.player.yvel
+            self.player.xloc += self.player.xvel
+        elif pyxel.btn(pyxel.KEY_W):
+            self.player.yloc -= self.player.yvel
+        elif pyxel.btn(pyxel.KEY_A):
+            self.player.xloc -= self.player.xvel
+        elif pyxel.btn(pyxel.KEY_S):
+            self.player.yloc += self.player.yvel
+        elif pyxel.btn(pyxel.KEY_D):
+            self.player.xloc += self.player.xvel
+
+        if pyxel.frame_count % 120 == 0:
             self.spawn_rate += 1
-
-        #add if player is touching asteroid
 
         if pyxel.frame_count % int((90/self.spawn_rate)) == 0:
             self.asteroids.append(self.Asteroid())
@@ -117,9 +127,5 @@ class Asteroids:
         pyxel.text(2, 2, str(self.timer()), 10)
         for asteroid in self.asteroids:
             pyxel.circ(asteroid.x, asteroid.y, asteroid.radius, asteroid.color)
-        pyxel.circ(pyxel.mouse_x, pyxel.mouse_y, 2, 5)
-        pyxel.text(50,50,f"spawn rate: {str(self.spawn_rate)}", 3)
-        pyxel.text(60,100,f"upper limit: {str(self.upperlimit)}", 3)
-        pyxel.text(100,120,f"list: {len(self.asteroids)}", 2)
-
+        pyxel.circ(self.player.xloc, self.player.yloc, 2, 3)
 
