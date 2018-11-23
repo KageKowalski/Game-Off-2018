@@ -7,6 +7,7 @@ import utility
 import Hub
 import Orbs
 import Template
+import Asteroids
 
 
 #Game application which is run in run.py
@@ -21,6 +22,7 @@ class App:
         self.hub=Hub.Hub()
         self.orbs=Orbs.Orbs()
         self.template=Template.Template()
+        self.asteroids=Asteroids.Asteroids()
         self.location=utility.Location.HUB
         pyxel.run(self.update,self.draw)
     
@@ -44,6 +46,11 @@ class App:
             if self.orbs.update():
                 self.location=utility.Location.HUB
                 self.orbs=Orbs.Orbs()
+        #Update Asteroids
+        elif self.location==utility.Location.ASTEROIDS:
+            if self.asteroids.update():
+                self.location=utility.Location.HUB
+                self.asteroids=Asteroids.Asteroids()
     
     
     #Draw App based on Player Location
@@ -57,4 +64,7 @@ class App:
         #Draw Orbs
         elif self.location==utility.Location.ORBS:
             self.orbs.draw()
+        #Draw Asteroids
+        elif self.location==utility.Location.ASTEROIDS:
+            self.asteroids.draw()
 

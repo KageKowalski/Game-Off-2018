@@ -8,5 +8,6 @@ import enum
 class Location(enum.Enum):
     HUB = 1
     ORBS = 2
+    ASTEROIDS = 3
     TEMPLATE = 100
 

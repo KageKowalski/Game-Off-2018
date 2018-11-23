@@ -31,6 +31,8 @@ class Hub:
         self.hub[0][4] = -1
         self.hub[1][1] = utility.Location.TEMPLATE
         self.hub[4][1] = utility.Location.ORBS
+        self.hub[7][1] = utility.Location.ASTEROIDS
+
     
     
     #Update Hub
@@ -108,4 +110,6 @@ class Hub:
                     #Draw Orbs Icon
                     elif self.hub[x][y] == utility.Location.ORBS:
                         pyxel.blt(x*8, y*8, 0, 0, 24, 8, 8, 0)
+                    elif self.hub[x][y] == utility.Location.ASTEROIDS:
+                        pyxel.blt(x*8, y*8, 0, 0, 32, 8, 8, 0)
 
