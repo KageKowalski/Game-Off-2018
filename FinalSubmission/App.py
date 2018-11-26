@@ -45,6 +45,7 @@ class App:
         elif self.location==utility.Location.ORBS:
             if self.orbs.update():
                 self.location=utility.Location.HUB
+                self.hub.player.pyx += self.orbs.getPyx()
                 self.orbs=Orbs.Orbs()
         #Update Asteroids
         elif self.location==utility.Location.ASTEROIDS:

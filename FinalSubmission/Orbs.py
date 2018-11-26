@@ -17,6 +17,7 @@ class Orbs:
             self.r = _r
             self.v = _v
             self.c = _c
+            self.invincibility_counter = 0
     
     
     #Paddle entity (Player cursor)
@@ -34,7 +35,7 @@ class Orbs:
     
     #Initialize data
     def __init__(self):
-        self.balls = [self.Ball(((random.random()+0.5)/2,(random.random()+0.5)/2))]
+        self.balls = [self.Ball(((random.random()+0.5)/3,(random.random()+0.5)/3))]
         self.score = 0
         self.paddle = self.Paddle(0,0)
         self.game_over = False
@@ -71,17 +72,23 @@ class Orbs:
                     
                 #Handle ball-paddle collisions
                 elif math.sqrt( ((ball.x-self.paddle.ulc[0])**2)+((ball.y-self.paddle.ulc[1])**2) ) <= ball.r or math.sqrt( ((ball.x-self.paddle.urc[0])**2)+((ball.y-self.paddle.urc[1])**2) ) <= ball.r or math.sqrt( ((ball.x-self.paddle.llc[0])**2)+((ball.y-self.paddle.llc[1])**2) ) <= ball.r or math.sqrt( ((ball.x-self.paddle.lrc[0])**2)+((ball.y-self.paddle.lrc[1])**2) ) <= ball.r:
-                    ball.v = (((random.random()-0.5)/-ball.v[0],((random.random() - 0.5)/3)-ball.v[1]))
-                    self.score = self.score + 1
-                    
-                    #Move ball out of paddle
-                    while math.sqrt( ((ball.x-self.paddle.ulc[0])**2)+((ball.y-self.paddle.ulc[1])**2) ) <= ball.r or math.sqrt( ((ball.x-self.paddle.urc[0])**2)+((ball.y-self.paddle.urc[1])**2) ) <= ball.r or math.sqrt( ((ball.x-self.paddle.llc[0])**2)+((ball.y-self.paddle.llc[1])**2) ) <= ball.r or math.sqrt( ((ball.x-self.paddle.lrc[0])**2)+((ball.y-self.paddle.lrc[1])**2) ) <= ball.r:
-                        ball.x = ball.x + ball.v[0]
-                        ball.y = ball.y + ball.v[1]
-                    
-                    #Add new ball to game
-                    if self.score%25==0:
-                        self.balls.append(self.Ball(((random.random()+0.5)/2,(random.random()+0.5)/2)))
+                    if pyxel.frame_count - ball.invincibility_counter > 10:
+                        ball.v = (((random.random()-0.5)/3)-ball.v[0],((random.random()-0.5)/3)-ball.v[1])
+                        self.score = self.score + 1
+                        
+                        #Move ball out of paddle
+                        while math.sqrt( ((ball.x-self.paddle.ulc[0])**2)+((ball.y-self.paddle.ulc[1])**2) ) <= ball.r or math.sqrt( ((ball.x-self.paddle.urc[0])**2)+((ball.y-self.paddle.urc[1])**2) ) <= ball.r or math.sqrt( ((ball.x-self.paddle.llc[0])**2)+((ball.y-self.paddle.llc[1])**2) ) <= ball.r or math.sqrt( ((ball.x-self.paddle.lrc[0])**2)+((ball.y-self.paddle.lrc[1])**2) ) <= ball.r:
+                            ball.x = ball.x + ball.v[0]
+                            ball.y = ball.y + ball.v[1]
+                        for i in range (0,5):
+                            ball.x = ball.x + ball.v[0]
+                            ball.y = ball.y + ball.v[1]
+                        
+                        #Add new ball to game
+                        if self.score%25==0:
+                            self.balls.append(self.Ball(((random.random()+0.5)/3,(random.random()+0.5)/3)))
+                        
+                        ball.invincibility_counter=pyxel.frame_count
         
         return False
     
@@ -108,4 +115,8 @@ class Orbs:
             
             #Draw score
             pyxel.text(2,2,str(self.score),random.randint(1,15))
+    
+        
+    def getPyx(self):
+        return self.score
 
