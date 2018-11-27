@@ -9,5 +9,6 @@ class Location(enum.Enum):
     HUB = 1
     ORBS = 2
     ASTEROIDS = 3
+    PYXTRIP = 4
     TEMPLATE = 100
 

@@ -32,8 +32,8 @@ class Hub:
         self.hub[1][1] = utility.Location.TEMPLATE
         self.hub[4][1] = utility.Location.ORBS
         self.hub[7][1] = utility.Location.ASTEROIDS
+        self.hub[10][1] = utility.Location.PYXTRIP
 
-    
     
     #Update Hub
     def update(self):
@@ -112,4 +112,7 @@ class Hub:
                         pyxel.blt(x*8, y*8, 0, 0, 24, 8, 8, 0)
                     elif self.hub[x][y] == utility.Location.ASTEROIDS:
                         pyxel.blt(x*8, y*8, 0, 0, 32, 8, 8, 0)
+                    #Draw PyxTrip Icon
+                    elif self.hub[x][y] == utility.Location.PYXTRIP:
+                        pyxel.blt(x*8, y*8, 0, 0, 40, 8, 8, 0)
 

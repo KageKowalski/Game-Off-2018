@@ -8,6 +8,7 @@ import Hub
 import Orbs
 import Template
 import Asteroids
+import PyxTrip
 
 
 #Game application which is run in run.py
@@ -23,6 +24,7 @@ class App:
         self.orbs=Orbs.Orbs()
         self.template=Template.Template()
         self.asteroids=Asteroids.Asteroids()
+        self.pyxtrip=PyxTrip.PyxTrip()
         self.location=utility.Location.HUB
         pyxel.run(self.update,self.draw)
     
@@ -52,6 +54,11 @@ class App:
             if self.asteroids.update():
                 self.location=utility.Location.HUB
                 self.asteroids=Asteroids.Asteroids()
+        #Update PyxTrip
+        elif self.location==utility.Location.PYXTRIP:
+            if self.pyxtrip.update():
+                self.location=utility.Location.HUB
+                self.pyxtrip=PyxTrip.PyxTrip()
     
     
     #Draw App based on Player Location
@@ -68,4 +75,7 @@ class App:
         #Draw Asteroids
         elif self.location==utility.Location.ASTEROIDS:
             self.asteroids.draw()
+        #Draw PyxTrip
+        elif self.location==utility.Location.PYXTRIP:
+            self.pyxtrip.draw()
 
