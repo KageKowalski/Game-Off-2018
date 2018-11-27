@@ -29,4 +29,14 @@ class Template:
         pyxel.cls(0)
         
         #CODE TO DRAW GAME GOES HERE
+    
+    
+    #Get pyx
+    def getPyx(self):
+        #Replace 0 with the amount of pyx player wins upon game over
+        #Conversion rate guidelines:
+        #Win 0 ~ 5 pyx: player did poorly
+        #Win 5 ~ 10 pyx: player did fine
+        #Win > 10 pyx: player did well
+        return 0
 

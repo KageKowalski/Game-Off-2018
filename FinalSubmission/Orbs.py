@@ -117,6 +117,8 @@ class Orbs:
             pyxel.text(2,2,str(self.score),random.randint(1,15))
     
         
+    #Get pyx
     def getPyx(self):
-        return self.score
+        #Replace "None" with the amount of pyx player wins upon game over
+        return int(self.score/10)
 

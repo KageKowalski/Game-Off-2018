@@ -40,6 +40,7 @@ class App:
         elif self.location==utility.Location.TEMPLATE:
             if self.template.update():
                 self.location=utility.Location.HUB
+                self.hub.player.pyx += self.template.getPyx()
                 self.template=Template.Template()
         #Update Orbs
         elif self.location==utility.Location.ORBS:
