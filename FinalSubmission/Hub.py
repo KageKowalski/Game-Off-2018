@@ -110,6 +110,7 @@ class Hub:
                     #Draw Orbs Icon
                     elif self.hub[x][y] == utility.Location.ORBS:
                         pyxel.blt(x*8, y*8, 0, 0, 24, 8, 8, 0)
+                    #Draw Asteroids Icon
                     elif self.hub[x][y] == utility.Location.ASTEROIDS:
                         pyxel.blt(x*8, y*8, 0, 0, 32, 8, 8, 0)
                     #Draw PyxTrip Icon
