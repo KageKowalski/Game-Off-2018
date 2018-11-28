@@ -31,6 +31,7 @@ class PyxTrip:
         #CODE TO DRAW GAME GOES HERE
     
     
+    #Get pyx
     def getPyx(self):
         return 0
 
