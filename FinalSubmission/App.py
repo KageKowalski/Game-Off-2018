@@ -54,11 +54,13 @@ class App:
         elif self.location==utility.Location.ASTEROIDS:
             if self.asteroids.update():
                 self.location=utility.Location.HUB
+                self.hub.player.pyx += self.asteroids.getPyx()
                 self.asteroids=Asteroids.Asteroids()
         #Update PyxTrip
         elif self.location==utility.Location.PYXTRIP:
             if self.pyxtrip.update():
                 self.location=utility.Location.HUB
+                self.hub.player.pyx += self.pyxtrip.getPyx()
                 self.pyxtrip=PyxTrip.PyxTrip()
     
     

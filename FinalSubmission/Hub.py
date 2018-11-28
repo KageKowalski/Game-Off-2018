@@ -28,11 +28,11 @@ class Hub:
                 self.hub[i].append(0)
         
         #Initialize Characters and place Player in hub
-        self.hub[0][4] = -1
-        self.hub[1][1] = utility.Location.TEMPLATE
-        self.hub[4][1] = utility.Location.ORBS
-        self.hub[7][1] = utility.Location.ASTEROIDS
-        self.hub[10][1] = utility.Location.PYXTRIP
+        self.hub[int(pyxel.width/16)+4][int(pyxel.height/16)] = -1
+        self.hub[int(pyxel.width/16)+3][int(pyxel.height/16)-1] = utility.Location.TEMPLATE
+        self.hub[int(pyxel.width/8)-3][2] = utility.Location.ORBS
+        self.hub[int(pyxel.width/8)-3][int(pyxel.height/8)-3] = utility.Location.ASTEROIDS
+        self.hub[2][int(pyxel.height/8)-3] = utility.Location.PYXTRIP
 
     
     #Update Hub
@@ -89,6 +89,9 @@ class Hub:
     def draw(self):
         #Clear screen
         pyxel.cls(0)
+        
+        #Draw Background
+        pyxel.bltm(0, 0, 0, 0, 0, int(pyxel.width/8), int(pyxel.height/8))
         
         #Write Instructions
         pyxel.text(2,96,"Instructions:",2)
