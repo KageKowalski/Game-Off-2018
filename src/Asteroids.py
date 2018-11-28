@@ -244,5 +244,25 @@ class Asteroids:
             # IF GAME IS DONE
             else:
                 pyxel.cls(0)
-                pyxel.text(60,50,f"You lasted: {self.now_timer}", 10)
+                pyxel.text(60, 50, f"You lasted: {self.now_timer}", 10)
                 pyxel.text(45, 70, "Press the 'B' key to return", 10)
+
+    def getPyx(self):
+        if 0 <= self.elapsed_seconds <= 10:
+            return 0
+        elif 11 <= self.elapsed_seconds <= 20:
+            return 3
+        elif 21 <= self.elapsed_seconds <= 30:
+            return 5
+        elif 31 <= self.elapsed_seconds <= 50:
+            return 7
+        elif 50 <= self.elapsed_seconds <= 60:
+            return 8
+        elif 61 <= self.elapsed_seconds <= 80:
+            return 10
+        elif 81 <= self.elapsed_seconds <= 100:
+            return 12
+        elif 81 <= self.elapsed_seconds <= 120:
+            return 14
+        else:
+            return 15
