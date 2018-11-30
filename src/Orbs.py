@@ -11,13 +11,20 @@ import math
 class Orbs:
     #Ball entity
     class Ball:
-        def __init__(self,_v,_x=float(192/2),_y=float(128/2),_r=4,_c=random.randint(1,15)):
+        def __init__(self,_v,_x=float(192/2),_y=float(128/2)):
             self.x = _x
             self.y = _y
-            self.r = _r
+            self.r = 4
             self.v = _v
-            self.c = _c
             self.invincibility_counter = 0
+            
+            #Change ball color based on velocity
+            if abs(self.v[0])+abs(self.v[1]) < 0.7:
+                self.c=0
+            elif abs(self.v[0])+abs(self.v[1]) < 1.3:
+                self.c=1
+            else:
+                self.c=2
     
     
     #Paddle entity (Player cursor)
@@ -35,7 +42,7 @@ class Orbs:
     
     #Initialize data
     def __init__(self):
-        self.balls = [self.Ball(((random.random()+0.5)/3,(random.random()+0.5)/3))]
+        self.balls = [self.Ball(((random.random()-0.5),(random.random()-0.5)))]
         self.score = 0
         self.paddle = self.Paddle(0,0)
         self.game_over = False
@@ -76,6 +83,14 @@ class Orbs:
                         ball.v = (((random.random()-0.5)/3)-ball.v[0],((random.random()-0.5)/3)-ball.v[1])
                         self.score = self.score + 1
                         
+                        #Change ball color based on velocity
+                        if abs(ball.v[0])+abs(ball.v[1]) < 0.7:
+                            ball.c=0
+                        elif abs(ball.v[0])+abs(ball.v[1]) < 1.3:
+                            ball.c=1
+                        else:
+                            ball.c=2
+                        
                         #Move ball out of paddle
                         while math.sqrt( ((ball.x-self.paddle.ulc[0])**2)+((ball.y-self.paddle.ulc[1])**2) ) <= ball.r or math.sqrt( ((ball.x-self.paddle.urc[0])**2)+((ball.y-self.paddle.urc[1])**2) ) <= ball.r or math.sqrt( ((ball.x-self.paddle.llc[0])**2)+((ball.y-self.paddle.llc[1])**2) ) <= ball.r or math.sqrt( ((ball.x-self.paddle.lrc[0])**2)+((ball.y-self.paddle.lrc[1])**2) ) <= ball.r:
                             ball.x = ball.x + ball.v[0]
@@ -86,7 +101,7 @@ class Orbs:
                         
                         #Add new ball to game
                         if self.score%25==0:
-                            self.balls.append(self.Ball(((random.random()+0.5)/3,(random.random()+0.5)/3)))
+                            self.balls.append(self.Ball(((random.random()-0.5),(random.random()-0.5))))
                         
                         ball.invincibility_counter=pyxel.frame_count
         
@@ -107,11 +122,18 @@ class Orbs:
         #Draw game graphics
         else:
             #Draw paddle
-            pyxel.rect(self.paddle.x-self.paddle.hl,self.paddle.y-self.paddle.hl,self.paddle.x+self.paddle.hl,self.paddle.y+self.paddle.hl,self.paddle.c)
+            pyxel.blt(self.paddle.ulc[0],self.paddle.ulc[1],0,56,8,8,8,0)
             
             #Draw balls
             for ball in self.balls:
-                pyxel.circ(ball.x,ball.y,ball.r,ball.c)
+                if ball.c==0:
+                    pyxel.blt(ball.x-3,ball.y-3,0,32,8,8,8,0)
+                elif ball.c==1:
+                    pyxel.blt(ball.x-3,ball.y-3,0,40,8,8,8,0)
+                elif ball.c==2:
+                    pyxel.blt(ball.x-3,ball.y-3,0,48,8,8,8,0)
+                else:
+                    print("ERROR: Impossible Orb Color")
             
             #Draw score
             pyxel.text(2,2,str(self.score),random.randint(1,15))
