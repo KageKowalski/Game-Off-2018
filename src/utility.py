@@ -12,3 +12,10 @@ class Location(enum.Enum):
     PYXTRIP = 4
     TEMPLATE = 100
 
+
+#Game state
+class GameState(enum.Enum):
+    GAME_START=0
+    IN_PROGRESS=1
+    GAME_OVER=2
+

@@ -29,10 +29,8 @@ class Hub:
         
         #Initialize Characters and place Player in hub
         self.hub[int(pyxel.width/16)+4][int(pyxel.height/16)] = -1
-        self.hub[int(pyxel.width/16)+3][int(pyxel.height/16)-1] = utility.Location.TEMPLATE
         self.hub[int(pyxel.width/8)-3][2] = utility.Location.ORBS
         self.hub[int(pyxel.width/8)-3][int(pyxel.height/8)-3] = utility.Location.ASTEROIDS
-        self.hub[2][int(pyxel.height/8)-3] = utility.Location.PYXTRIP
 
     
     #Update Hub
@@ -94,10 +92,10 @@ class Hub:
         pyxel.bltm(0, 0, 0, 0, 0, int(pyxel.width/8), int(pyxel.height/8))
         
         #Write Instructions
-        pyxel.text(2,96,"Instructions:",2)
-        pyxel.text(2,104,"WASD - Movement",2)
-        pyxel.text(2,112,"E    - Execute Nearby Game",2)
-        pyxel.text(2,120,"ESC  - Exit RetroHub",2)
+        pyxel.text(2,66,"Instructions:",2)
+        pyxel.text(2,74,"WASD - Movement",2)
+        pyxel.text(2,82,"E    - Execute Nearby Game",2)
+        pyxel.text(2,90,"ESC  - Exit RetroHub",2)
         
         #Draw Hub
         for x in range(0,len(self.hub)):
